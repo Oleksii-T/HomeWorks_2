@@ -296,7 +296,9 @@ int main ( void )
 
 
 /*
-Having spent two semesters with Progtest programming and considering the upcoming holidays, one needs a change. It is however crucial to properly pack all belongings before leaving for holidays. Therefore, the last Progtest homework is focused on a program, which may be helpful when packing your suitcases.
+Having spent two semesters with Progtest programming and considering the upcoming holidays, one needs a change. It is
+however crucial to properly pack all belongings before leaving for holidays. Therefore, the last Progtest homework is
+focused on a program, which may be helpful when packing your suitcases.
 
 We assume that we pack the following things into our luggage:
 
@@ -305,28 +307,47 @@ We assume that we pack the following things into our luggage:
     CKnife - a knife, 100g. We store the blade length with the knife, the length is in centimeters.
     CMobile - 150g in weight, both manufacturer and mode name is archived.
 
-All things are packed into a luggage - either a CSuitcase or a CBackpack. The programmed luggage is a wonderful thing - its capacity is infinite (anything may be stored in the luggage) while the weight of the empty suitcase is only 2000g (suitcase) and 1000g (backpack). Moreover, the suitcase provides us with a very helpful interface which simplifies certain common tasks:
+All things are packed into a luggage - either a CSuitcase or a CBackpack. The programmed luggage is a wonderful
+thing - its capacity is infinite (anything may be stored in the luggage) while the weight of the empty suitcase is
+only 2000g (suitcase) and 1000g (backpack). Moreover, the suitcase provides us with a very helpful interface which
+simplifies certain common tasks:
 
-    Constructor CSuitcase(w,h,d) initializes an empty suitcase with dimensions w x h x d. The dimensions must be stored and displayed (see sample runs). Backpack interface CBackpack is similar, except it does not take any parameters.
+    Constructor CSuitcase(w,h,d) initializes an empty suitcase with dimensions w x h x d. The dimensions must be stored
+    and displayed (see sample runs). Backpack interface CBackpack is similar, except it does not take any parameters.
     Method Add adds any of the above things (clothes, mobile, knife, shoes) to the suitcase/backpack.
-    Method Weight solves the total weight of the packed luggage (including all things inside). The total weight is the return value (an integer).
-    Method Danger checks whether the packed suitcase/backpack contains a dangerous thing. If it does, the method returns true. We consider knives with blades exceeding 7cm dangerous, and of course, mobiles Samsung Galaxy Note S7 are dangerous too.
-    Method Count counts all things in the luggage (the luggage itself is not included). The count is returned as an integer number.
-    Method IdenticalContents tests whether the contents of two luggages is identical, or not (returns a bool value). The comparison only checks the contents, it does not care about the order of things in the luggage and it does not compare the luggage (suitcase/backpack) itself.
+    Method Weight solves the total weight of the packed luggage (including all things inside). The total weight is the
+    return value (an integer).
+    Method Danger checks whether the packed suitcase/backpack contains a dangerous thing. If it does, the method returns
+    true. We consider knives with blades exceeding 7cm dangerous, and of course, mobiles Samsung Galaxy Note S7 are
+    dangerous too.
+    Method Count counts all things in the luggage (the luggage itself is not included). The count is returned as an
+    integer number.
+    Method IdenticalContents tests whether the contents of two luggages is identical, or not (returns a bool value).
+    The comparison only checks the contents, it does not care about the order of things in the luggage and it does
+    not compare the luggage (suitcase/backpack) itself.
     Operator << displays the content of the suitcase/backpack in a stream. The format of the output is given below.
     Both CSuitcase and CBackpack class must correctly implement copying and deleting (releasing allocated resources). 
 
-Your task is to design and implement the classes CKnife, CMobile, CClothes, CShoes, CSuitcase, and CBackpack. Pay special attention to the design of the classes. The testing environment requires that inheritance and polymorphism is used. Moreover, place the attributes (member variables) only in the classes which really need them. If you place all attributes in the base class, the solution will not work.
+Your task is to design and implement the classes CKnife, CMobile, CClothes, CShoes, CSuitcase, and CBackpack. Pay
+special attention to the design of the classes. The testing environment requires that inheritance and polymorphism
+is used. Moreover, place the attributes (member variables) only in the classes which really need them. If you place
+all attributes in the base class, the solution will not work.
 
-Submit a source file, the file must contain declaration and implementation of the required classes. Do not place #include / main function into the submitted file. If #include / main is left in the submitted file, it must be placed in a conditional compile block (#ifndef __PROGTEST__ / #endif).
+Submit a source file, the file must contain declaration and implementation of the required classes. Do not place
+#include / main function into the submitted file. If #include / main is left in the submitted file, it must be placed
+in a conditional compile block (#ifndef __PROGTEST__ / #endif).
 Notes:
 
-    The output generated by the operator starts with the line Suitcase (with suitcase dimensions), or Backpack (without anything).
+    The output generated by the operator starts with the line Suitcase (with suitcase dimensions), or Backpack
+    (without anything).
     The last line starts with \- and ends with a newline.
     The things in the output shall be listed in the order they were Add()ed.
-    The output is compared with the reference output in a textual way. It is important to keep the formatting, including whitespaces.
-    Do not use typeid operator. The use of typeid in this problem indicates deficient class design. The testing environment intentionally does not include typeinfo header file, thus, any use of typeid will lead to compile error.
-    Get rid of long if / else if sequences when copying the suitcase. Use polymorphism to correctly copy the things in your suitcase.
+    The output is compared with the reference output in a textual way. It is important to keep the formatting,
+    including whitespaces.
+    Do not use typeid operator. The use of typeid in this problem indicates deficient class design. The testing
+    environment intentionally does not include typeinfo header file, thus, any use of typeid will lead to compile error.
+    Get rid of long if / else if sequences when copying the suitcase. Use polymorphism to correctly copy the things
+    in your suitcase.
 
 
 
