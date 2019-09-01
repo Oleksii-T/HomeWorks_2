@@ -34,7 +34,7 @@ class CVATRegister
     bool Audit (const string & name, const string & addr, unsigned int & sumIncome) const;
    bool Audit (const string & taxID, unsigned int & sumIncome) const;
 	  unsigned int MedianInvoice (void) const;   
-   void pv (const vector<int> & vec);
+   void pv (const vector<int> & vec); 
   private:
    vector<pair<int,string>> id; //TaxID
    vector<pair<int,string>> n_a; //name and address
