@@ -588,29 +588,49 @@ CInvoice(CDate(2000,1,1),"Second     Company","first Company",300,30.000000)
 /*
 The task is to develop classes to implement VAT (value added tax) register.
 
-Assume companies that issue / accept invoices from other companies. A company that issues an invoice is obligated to pay VAT (based on the amount). Similarly, a company that accepts (pays) an invoice may (under some circumstances) apply for the VAT refund. The refunds are the bottlenecks of the system, in general, refunds may be abused to commit tax evasions. The implemented register shall help to avoid the evasions.
+Assume companies that issue / accept invoices from other companies. A company that issues an invoice is obligated to
+pay VAT (based on the amount). Similarly, a company that accepts (pays) an invoice may (under some circumstances) apply
+for the VAT refund. The refunds are the bottlenecks of the system, in general, refunds may be abused to commit tax
+evasions. The implemented register shall help to avoid the evasions.
 
-Both issued and accepted invoices are registered in the CVATRegister class. Companies are obligated to register their invoices, both issued and accepted. The register then matches the corresponding pairs, thus is able to find the unmatched invoices. The invoices may be both registered in the system, or deleted from the system (e.g. if an erroneous invoice is registered). The interface of the register is:
+Both issued and accepted invoices are registered in the CVATRegister class. Companies are obligated to register their
+invoices, both issued and accepted. The register then matches the corresponding pairs, thus is able to find the
+unmatched invoices. The invoices may be both registered in the system, or deleted from the system (e.g. if an
+erroneous invoice is registered). The interface of the register is:
 
 default constructor
     initializes an empty register,
 RegisterCompany ( name )
-    the method registers a new company to the system. The name passed to this call is the "official" name of the company, and will be used in the exports from the register. Return value is a success (true) / fail (false) indicator. The call fails if the same company is already registered. The register is, indeed, a bit tolerant in the company names:
+    the method registers a new company to the system. The name passed to this call is the "official" name of the
+    company, and will be used in the exports from the register. Return value is a success (true) / fail (false)
+    indicator. The call fails if the same company is already registered. The register is, indeed, a bit tolerant
+    in the company names:
 
         the comparison does not distinguish lower/upper case,
         abundant spaces are ignored.
 
-    These rules are used when registering the company, as well as in the adding/removing of invoices. For example names "My Company", "mY CoMpAnY", " My Company ", and " mY CoMPAnY " are considered identical (one company), however, names "My Company" and "MyCompany" denote two different companies.
+    These rules are used when registering the company, as well as in the adding/removing of invoices. For example names
+    "My Company", "mY CoMpAnY", " My Company ", and " mY CoMPAnY " are considered identical (one company), however,
+    names "My Company" and "MyCompany" denote two different companies.
 AddIssued ( invoice )
-    the method adds an invoice to the register. The method is called by the company that actually issues the invoice. Return value is a success (true) / fail (false) indicator. An error is reported a company is not registered (either seller or buyer), the seller and the buyer is the same company, or an identical invoice has already been registered via AddIssued (we assume two identical invoices cannot exists, there must be different at least one of date/buyer/seller/amount/VAT).
+    the method adds an invoice to the register. The method is called by the company that actually issues the invoice.
+    Return value is a success (true) / fail (false) indicator. An error is reported a company is not registered (either
+    seller or buyer), the seller and the buyer is the same company, or an identical invoice has already been registered
+    via AddIssued (we assume two identical invoices cannot exists, there must be different at least one of
+    date/buyer/seller/amount/VAT).
 AddAccepted ( invoice )
-    the method adds an invoice to the register, this method is called by the company that accepted the invoice (buyer). The behavior is the same as AddIssued.
+    the method adds an invoice to the register, this method is called by the company that accepted the invoice (buyer).
+    The behavior is the same as AddIssued.
 DelIssued ( invoice )
     the method removes an invoice from the register. The method is called by a selling company that previously registered the invoice via AddIssued. Return value is a success (true) / fail (false) indicator. Error is returned if the invoice has not been previously registered with AddIssued.
 DelAccepted ( invoice )
     the method is analogous to DelIssued except for the buyer company.
 Unmatched ( company, sortOpt )
-    the method finds all invoices where company company is either the seller or the buyer, and where the invoices had not been matched (i.e. had been registered either by AddIssued, or by AddAccepted, but not both). The method returns a list of such invoices, the list will be sorted by the sort keys listed in sortOpt (see below). The invoices returned in the list will use the "official" company names, as they were registered via RegisterCompany. The official names will also be used for the sorting.
+    the method finds all invoices where company company is either the seller or the buyer, and where the invoices had
+    not been matched (i.e. had been registered either by AddIssued, or by AddAccepted, but not both). The method
+    returns a list of such invoices, the list will be sorted by the sort keys listed in sortOpt (see below). The
+    invoices returned in the list will use the "official" company names, as they were registered via RegisterCompany.
+    The official names will also be used for the sorting.
 
 Class CInvoice represent a single invoice. The interface requirements are:
 
@@ -621,16 +641,21 @@ Date, Seller, Buyer, Amount, VAT
 more
     you may add further public/private methods and fields that are needed for the implementation.
 
-Class CSortOpt defines the sort criteria. In general, all invoice fields may be used to sort the lists. For example, an instance:
+Class CSortOpt defines the sort criteria. In general, all invoice fields may be used to sort the lists. For example, 
+an instance:
 
 CSortOpt () . AddKey ( CSortOpt::BY_AMOUNT, true ) . AddKey ( CSortOpt::BY_SELLER, false )
 
-means to sort the list in an ascending order using the amount (the first sort key). If there are two invoices with the same amount, the the second sort key (seller company name) will be used, the sort order is descending in this case. If the second key is not enough to establish the sort order, the order of invoice registering will be used as the last sort key. The interface of CSortOpt is:
+means to sort the list in an ascending order using the amount (the first sort key). If there are two invoices with the
+same amount, the the second sort key (seller company name) will be used, the sort order is descending in this case.
+If the second key is not enough to establish the sort order, the order of invoice registering will be used as the last
+sort key. The interface of CSortOpt is:
 
 default constructor
     initializes the empty object,
 AddKey ( sortBy, ascending )
-    adds next sort key sortBy, sort order is defined by the second parameter ascending (true = ascending, false = descending). Sort keys are:
+    adds next sort key sortBy, sort order is defined by the second parameter ascending
+    (true = ascending, false = descending). Sort keys are:
 
         BY_DATE - by invoice date,
         BY_SELLER - by the name of the seller, the official name is used, sorting is case insensitive,
@@ -638,11 +663,23 @@ AddKey ( sortBy, ascending )
         BY_AMOUNT - by the amount billed,
         BY_VAT - by VAT.
 
-Class CDate implements a simple date wrapper, the implementation is included in the testing environment, there is a copy of the implementation included in the attached source. The implementation cannot be changed, moreover, the implementation must be kept in the conditional compile block.
+Class CDate implements a simple date wrapper, the implementation is included in the testing environment, there is a
+copy of the implementation included in the attached source. The implementation cannot be changed, moreover, the
+implementation must be kept in the conditional compile block.
 
-Submit a source of the classes CVATRegister, CSortOpt, and CInvoice. Use the attached file as a basis of your implementation. Moreover, the attached file contains some basic tests. You are free to add further classes to simplify your implementation.
+Submit a source of the classes CVATRegister, CSortOpt, and CInvoice. Use the attached file as a basis of your
+implementation. Moreover, the attached file contains some basic tests. You are free to add further classes to
+simplify your implementation.
 
-The problem is a bit similar to the previous homework. We assume you use adequate STL containers to implement this program. Moreover, we expect both time and memory efficient implementation. All Add / Del methods must be faster than linear, sorting must be n log n. There is a significant malus if the solution does not pass the optional speed test. Be cautious when using C++11 unordered_set / unordered_map. Do not implement hash function as a specialization of std::hash. Use your own function/functor instead, use the type explicitly in declarations. (The specialization of std::hash assumes that namespace std is re-opened. This is difficult to accomplish when your code is already enclosed in a namespace. The solutions on the Internet (e.g. stack overflow, cpp reference) implicitly assume you do not use namespaces. Thus the solutions are not portable, in particular, they are not compatible with namespaces and this are not compatible with Progtest.)
+The problem is a bit similar to the previous homework. We assume you use adequate STL containers to implement
+this program. Moreover, we expect both time and memory efficient implementation. All Add / Del methods must be
+faster than linear, sorting must be n log n. There is a significant malus if the solution does not pass the optional
+speed test. Be cautious when using C++11 unordered_set / unordered_map. Do not implement hash function as a
+specialization of std::hash. Use your own function/functor instead, use the type explicitly in declarations.
+(The specialization of std::hash assumes that namespace std is re-opened. This is difficult to accomplish when
+your code is already enclosed in a namespace. The solutions on the Internet (e.g. stack overflow, cpp reference)
+implicitly assume you do not use namespaces. Thus the solutions are not portable, in particular, they are not
+compatible with namespaces and this are not compatible with Progtest.)
 
 
 
