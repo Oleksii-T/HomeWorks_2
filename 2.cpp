@@ -35,7 +35,7 @@ ios_base & dummy_polynomial_manipulator ( ios_base & x )
 ios_base & ( *(polynomial_variable(const string & varName)) ) (ios_base & x)
 {
   NameG = varName;
-  return dummy_polynomial_manipulator;
+  return dummy_polynomial_manipulator; 
 }
 class CPolynomial
 {
